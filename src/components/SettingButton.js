@@ -1,12 +1,12 @@
 import {Alert, TouchableOpacity, StyleSheet, Text} from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
+import { Feather } from '@expo/vector-icons';
 
 export default function SettingButton() {
     const Navigation = useNavigation();
     return (
         <TouchableOpacity onPress={() => Navigation.navigate('Setting')} style={styles.container}>
-            <Icon name="settings" size={32} color="#fff" style={styles.icon} />
+            <Feather name="settings" size={32} color="#fff" style={styles.icon} />
         </TouchableOpacity>
     )
 }

@@ -1,12 +1,14 @@
 import {Alert, TouchableOpacity, StyleSheet, Text} from 'react-native';
-import Icon from 'react-native-vector-icons/AntDesign';
+import { Feather } from '@expo/vector-icons';
 
 export default function SearchButton() {
     return (
+
         <TouchableOpacity onPress={() => {Alert.alert('Botão pressionado!')}} style={styles.container}>
-            <Icon name= 'search1' size={32} color='#fff' style={styles.icon} />
+            <Feather name="search" size={32} color="#fff" style={styles.icon} />
         </TouchableOpacity>
     )
+    
 }
 
 const styles = StyleSheet.create({
@@ -18,6 +20,5 @@ const styles = StyleSheet.create({
     },
     icon: {
         textAlign: 'center',
-        // fontSize: 40
     }
 });

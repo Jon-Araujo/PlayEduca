@@ -1,12 +1,12 @@
 import {Alert, TouchableOpacity, StyleSheet, Text} from 'react-native';
-import Icon from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
+import { AntDesign } from '@expo/vector-icons';
 
 export default function ProfileButton() {
     const navigation = useNavigation();
     return (
         <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={styles.container}>
-            <Icon name="profile" size={32} color="#fff" style={styles.icon} />
+            <AntDesign name="profile" size={32} color="#fff" style={styles.icon} />
         </TouchableOpacity>
     )
 }
