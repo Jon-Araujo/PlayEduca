@@ -2,17 +2,26 @@ import { useState } from 'react';
 import {Text, StyleSheet, Image, View} from 'react-native';
 import NavigationBar from '../components/NavigationBar';
 import Swiper from 'react-native-deck-swiper';
-import image1 from '../../assets/images/image1.jpeg';
-import image2 from '../../assets/images/image2.png';
-import image3 from '../../assets/images/image3.jpeg';
+import WebView from 'react-native-webview';
 
 
 export default function HomeScreen() {
     const [cards, setCards] = useState([
-        { id: 1, image: image1 },
-        { id: 2, image: image2 },
-        { id: 3, image: image3 }
+        { id: 0, video: 'https://youtube.com/shorts/IMoaozWU6lw?si=4AndfdKGyDCA-bex'},
+        { id: 1, video: 'https://youtube.com/shorts/z2oPnwQGs58?si=wqkHvHvQYS2S5iRF'},
+        { id: 2, video: 'https://youtube.com/shorts/RxMz56K7IqQ?si=SxYJmFqktiK8WhYc'}
       ]);
+
+      
+    const [activeIndex, setActiveIndex] = useState(0);
+
+    const removeYTActions = () => {
+        const Buttons = document.querySelector('.action-container');
+        const Metadata = document.querySelector('.metadata-container');
+        if (Buttons) Buttons.parentNode.removeChild(Buttons);
+        if (Metadata) Metadata.parentNode.removeChild(Metadata);
+
+    }
 
     return (
         <>
@@ -20,18 +29,35 @@ export default function HomeScreen() {
                 <Swiper
                 cards={cards}
                 renderCard={(card) => {
-                return (
-                    <Image source={card.image} style={styles.images} />
-                )
+                    if (card.id === activeIndex) {
+                        return (
+                            // <View>
+                                <WebView
+                                    style={styles.webview}
+                                    source={{ uri: `${card.video}` }}
+                                    javaScriptEnabled={true}
+                                    domStorageEnabled={true}
+                                    allowsInlineMediaPlayback={true}
+                                    mediaPlaybackRequiresUserAction={false}
+                                    // injectedJavaScript={removeYTActions} djpasjdpasdopajspdoasjdpaosdpoajsdpoasjdpoasjdpoas
+  
+                                />
+                            // </View>
+                        )
+                    }    
                 }}
                 onSwiped={(cardIndex) => {
-                console.log(cardIndex);
+                    if(activeIndex < cards.length-1) {
+                        setActiveIndex(activeIndex+1);
+                    } else if (activeIndex >= cards.length-1){
+                        setActiveIndex(0);
+                    }
                 }} 
+                marginTop={0}
                 infinite={true}
                 horizontalSwipe={true}
-                stackSize={3}
+                stackSize={cards.length-1}
                 stackSeparation={0}
-                // backgroundColor='000'
                 overlayLabels={{
                     left: {
                     title: 'Não',
@@ -81,11 +107,21 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-    images: {
-        width: '100%',
-        height: '75%'
-    },
     card: {
-        height: '85%',
-    }
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+     webview: {
+        height: '100%',
+        width: '100%',
+        // justifyContent: 'center',
+        // alignItems: 'center',
+        borderRadius: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+        elevation: 1,
+     }
   });
